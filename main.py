@@ -1,5 +1,5 @@
-from bakery import assert_equal
 from dataclasses import dataclass
+from bakery import assert_equal
 from drafter import *
 
 set_website_title("Blue Hen Budget Tracker & Planner")
@@ -7,8 +7,8 @@ set_site_information(
     author="Kenan",
     description="Is a budget planner and tracker that allows for students to track their spending and saving by setting goals ",
     sources="",
-    planning=["plan.pdf", "design.pdf"],
-    links=["https://github.com/ktendoh-tech/bluehen-budget-tracker"]
+    planning=["plan.pdf", "design.pdf", "Chat GPT transcript.pdf"],
+    links=[""]
 )
 hide_debug_information()
 set_website_framed(False)
