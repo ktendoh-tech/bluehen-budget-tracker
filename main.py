@@ -36,7 +36,7 @@ class State:
 #routes
  
 @route
-def home(state: State)-> Page:
+def index(state: State)-> Page:
     """
     Is the homepage of the program which shows all information about the user's savings, balance, goals, and budget
     Args:
