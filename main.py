@@ -44,17 +44,12 @@ def index(state: State)-> Page:
            Page: returns a page with every attribute and its current information listed
     """
     return Page(state, [
-        Text("Blue Hen Student Budget Planner", size = 30),
-        Text("Income, Expenses, and Savings"),
+        Header("Blue Hen Student Budget Planner", level = 1),
+        "Income, Expenses, and Savings\n",
         
-        Text("Monthly Budget: $" + str(state.monthly_budget)),
-        Text(""),
-        
-        Text("Savings: $" + str(state.savings_goal)),
-        Text(""),
-        
-        Text("Balance: $" + str(state.balance)),
-        Text(""),
+        "Monthly Budget: $" + str(state.monthly_budget) + "\n",
+        "Savings: $" + str(state.total_savings) + "\n",
+        "Balance: $" + str(state.balance) + "\n",
         
         Button("View Transactions", "user_transactions"),
         Button("Add Transaction", "add_transaction"),
