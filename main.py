@@ -13,7 +13,6 @@ set_site_information(
 hide_debug_information()
 set_website_framed(False)
 
-
 @dataclass
 class Transaction:
     description: str
@@ -87,7 +86,8 @@ def add_transaction(state: State)-> Page:
              TextBox("date", ""),
         
         "\n",
-        Button("Submit", "list_user_transactions")
+        Button("Submit", "list_user_transactions"),
+        Button("Home", "index")
     ])
 
 #Unit Tests
@@ -130,9 +130,10 @@ def list_user_transactions(state: State,
         state.balance -= amount
         
     page_content = [
-    Text("Transaction added!"),
-    Text("Updated Balance: $" + str(state.balance))
-]
+        Text("Transaction added!"),
+        Text("Updated Balance: $" + str(state.balance)),
+        Button("Home", "index")
+    ]
     for transaction in state.transactions:
         page_content.append(Text(transaction.description + " " + str(transaction.amount) + " " + transaction.category + " " + transaction.transaction_type + " " + transaction.date))
             
@@ -156,7 +157,10 @@ def user_transactions(state: State) -> Page:
     Returns:
            Page: returns a page of all transactions
     """
-    transaction_content = [Text("Your Transactions")]
+    transaction_content = [
+        Text("Your Transactions"),
+        Button("Home", "index")
+    ]
     for transaction in state.transactions:
         transaction_content.append(Text(
     transaction.description + " $" +
@@ -167,7 +171,8 @@ def user_transactions(state: State) -> Page:
 ))
     if not state.transactions:
         return Page(state, [
-            Text("No Transactions")
+            Text("No Transactions"),
+            Button("Home", "index")
         ])
     
     return Page(state, transaction_content)
@@ -213,7 +218,8 @@ def user_budget(state: State) -> Page:
         Text("Set Your Monthly Budget"),
         Text("Enter your monthly budget:"),
         TextBox("new_budget", ""),
-        Button("Submit Budget", "update_budget")
+        Button("Submit Budget", "update_budget"),
+        Button("Home", "index")
     ])
 
 # user_budget Unit tests
@@ -250,6 +256,7 @@ def update_budget(state: State, new_budget: float)-> Page:
     return Page(state, [
         Text("Budget updated"),
         Text("Updated budget: $" + str(state.monthly_budget)),
+        Button("Home", "index")
     ])
 
 #update_budget unit tests
@@ -288,7 +295,8 @@ def user_savings(state: State) -> Page:
         TextBox("new_savings", ""),
         Text("Enter your savings goal:"),
         TextBox("new_goal", ""),
-        Button("Update Savings", "update_savings")
+        Button("Update Savings", "update_savings"),
+        Button("Home", "index")
     ])
 
 #user_savings Unit tests
@@ -335,7 +343,8 @@ def update_savings(state: State, new_savings: str, new_goal: str)-> Page:
     return Page(state, [
     Text("Total Savings: $" + str(state.total_savings)),
     Text("Savings Goal: $" + str(state.savings_goal)),
-    Text(message)
+    Text(message),
+    Button("Home", "index")
 ])
 
 #update_savings Unit Tests
@@ -370,7 +379,8 @@ def search_category(state: State) -> Page:
         Text("Search Transactions by Category"),
         Text("Enter a category:"),
         TextBox("category_search", ""),
-        Button("Search", "display_search_category")
+        Button("Search", "display_search_category"),
+        Button("Home", "index")
     ])
 
 #search_category Unit tests
@@ -399,7 +409,10 @@ def display_search_category(state: State, category_search: str)-> Page:
     Returns:
            Page: is a page that returns the results of what the user searched
     """
-    category_list = [Text("Search Results:")]
+    category_list = [
+        Text("Search Results:"),
+        Button("Home", "index")
+    ]
     for transaction in state.transactions:
         if category_search == transaction.category:
             category_list.append(Text(
@@ -438,7 +451,8 @@ def search_transaction(state: State) -> Page:
         Text("Search Transactions"),
         Text("Enter transaction description:"),
         TextBox("transaction_search", ""),
-        Button("Search", "display_search_transaction")
+        Button("Search", "display_search_transaction"),
+        Button("Home", "index")
     ])
 
 #search_transaction Unit Tests
@@ -487,8 +501,10 @@ def display_search_transaction(state: State, transaction_search: str)-> Page:
             
     if not transaction_content_list:
         return Page(state, [
-            Text("Transaction not found")
+            Text("Transaction not found"),
+            Button("Home", "index")
         ])
+    transaction_content_list.append(Button("Home", "index"))
     return Page(state, transaction_content_list)
     
 #Unit Tests
@@ -518,12 +534,11 @@ state = State(
 )
 result = display_search_transaction(state, "11/13/2026")
 assert_equal(len(state.transactions), 2)
-
+ 
 
 
 
 start_server(State(transactions=[], monthly_budget=0.0, savings_goal=0.0, search_query="", selected_category="", total_savings=0.0, balance=0.0))        
         
             
-
 
